@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 // This component represents a login form
-const Login = ({ setToken }) => {
+const Login = ({ setToken, setNotice }) => {
   // State variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,12 +18,13 @@ const Login = ({ setToken }) => {
 
       // If the login is successful, set the token received from the server
       setToken(response.data.token);
+      setNotice('Successfully logged in.')
 
       // Clear the input fields
       setUsername('');
       setPassword('');
     } catch (error) {
-      console.error(error);
+      setNotice('Invalid Username or Password.')
     }
   };
 

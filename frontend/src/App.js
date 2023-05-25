@@ -10,6 +10,7 @@ const App = () => {
   const [token, setToken] = useState('');
   const [editTaskId, setEditTaskId] = useState(null);
   const [editedTitle, setEditedTitle] = useState('');
+  const [notice, setNotice] = useState('');
 
   // Check if a token is stored in local storage on component mount
   useEffect(() => {
@@ -41,6 +42,7 @@ const App = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
+    setNotice('Successfully logged out.')
   };
 
   // Function to create a new task
@@ -134,6 +136,9 @@ const App = () => {
   // Render the application
   return (
     <div className='app-main'>
+      {notice && (
+        <p className={`notice notice-${notice.includes('Successfully') ? 'success' : 'error'}`}>{notice}</p>
+      )}
       <h1>To-Do App</h1>
       {token ? (
         // If a token is present, render the tasks section
@@ -193,13 +198,13 @@ const App = () => {
       ) : (
         // If no token is present, render the authentication section
         <div className='app-auth'>
-          <Login setToken={setToken} />
+          <Login setToken={setToken} setNotice={setNotice} />
           <div className='auth-divider'>
             <hr />
             <span>or</span>
             <hr />
           </div>
-          <Register setToken={setToken} />
+          <Register setToken={setToken} setNotice={setNotice} />
         </div>
       )}
     </div>

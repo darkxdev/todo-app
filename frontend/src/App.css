@@ -112,3 +112,18 @@
 .button-delete {
   padding: 0 0.5rem;
 }
+
+.notice {
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.notice-success {
+  background-color: greenyellow;
+}
+
+.notice-error {
+  background-color: red;
+  color: white;
+}

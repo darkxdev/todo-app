@@ -2,13 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 // This component represents a registration form
-const Register = ({ setToken }) => {
+const Register = ({ setToken, setNotice }) => {
   // State variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   // Function to handle the registration process
   const handleRegister = async () => {
+    if (!username || !password) {
+      setNotice('Please fill in all fields before registering');
+      return;
+    }
+
+    if (username.length < 4 || password.length < 4) {
+      setNotice('Username and password should be at least 4 characters long');
+      return;
+    }
+
     try {
       // Send a POST request to the server to register the user
       const response = await axios.post(`${process.env.REACT_APP_API_HOST}/auth/register`, {
@@ -18,12 +28,13 @@ const Register = ({ setToken }) => {
 
       // If the registration is successful, set the token received from the server
       setToken(response.data.token);
+      setNotice('Successfully registered.')
 
       // Clear the input fields
       setUsername('');
       setPassword('');
     } catch (error) {
-      console.error(error);
+      setNotice('Something went wrong, please try again')
     }
   };
 
