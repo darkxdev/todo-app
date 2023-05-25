@@ -62,7 +62,7 @@ const App = () => {
   const handleUpdateTask = async (taskId, newTitle, completed) => {
     try {
       await axios.put(
-        `http://localhost:5000/tasks/${taskId}`,
+        `${process.env.REACT_APP_API_HOST}/tasks/${taskId}`,
         { title: newTitle, completed: completed || false },
         { headers: { Authorization: token } }
       );
