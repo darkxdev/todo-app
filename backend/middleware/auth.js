@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 /**
  * Middleware for authenticating JWT token in the request headers.
  * Verifies the token and attaches the decoded user information to the request object.
@@ -14,7 +16,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     // Verify and decode the token using the provided secret key
-    const decoded = jwt.verify(token, 'your-secret-key');
+    const decoded = jwt.verify(token, process.env.SECRET_KEY || 'your-secret-key');
 
     // Attach the decoded user information to the request object for further use
     req.user = decoded;
