@@ -11,7 +11,7 @@ const Register = ({ setToken }) => {
   const handleRegister = async () => {
     try {
       // Send a POST request to the server to register the user
-      const response = await axios.post('http://localhost:5000/auth/register', {
+      const response = await axios.post(`${process.env.API_HOST}/auth/register`, {
         username,
         password,
       });

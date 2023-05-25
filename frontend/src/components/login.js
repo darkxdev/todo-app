@@ -11,7 +11,7 @@ const Login = ({ setToken }) => {
   const handleLogin = async () => {
     try {
       // Send a POST request to the server to authenticate the user
-      const response = await axios.post('http://localhost:5000/auth/login', {
+      const response = await axios.post(`${process.env.API_HOST}/auth/login`, {
         username,
         password,
       });
