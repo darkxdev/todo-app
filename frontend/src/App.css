@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.app-main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-auth {
+  width: 300px;
+  padding: 2rem;
+}
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth > * {
+  margin-bottom: 1rem;
+}
+
+.auth input {
+  padding: 0.5rem;
+}
+
+.auth button {
+  padding: 0.5rem;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-divider hr {
+  flex-grow: 1;
+  height: 1px;
+  background-color: black;
+  border: none;
+}
+
+.auth-divider span {
+  margin: 0 0.5rem;
+}
+
+.app-tasks {
+  width: 500px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.new-task {
+  display: flex;
+  justify-content: space-between;
+}
+
+.new-task input {
+  width: 70%;
+  padding: 0.5rem;
+}
+
+.new-task button {
+  width: 25%;
+}
+
+.current-tasks {
+  list-style: none;
+  padding: 1rem 0;
+}
+
+.task-item {
+  width: 100%;
+  border: 1px solid black;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.button-complete {
+  width: 125px;
+  margin-right: 0.5rem;
+}
