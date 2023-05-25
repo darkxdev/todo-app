@@ -3,11 +3,16 @@ const router = express.Router();
 const Task = require('../models/task');
 const authMiddleware = require('../middleware/auth');
 
-// Create a task
+/**
+ * Endpoint for creating a new task.
+ * POST /
+ * Creates a new task with the provided title for the authenticated user.
+ */
 router.post('/', authMiddleware, async (req, res) => {
   const { title } = req.body;
 
   try {
+    // Create a new task associated with the authenticated user
     const newTask = await Task.create({
       title,
       completed: false,
@@ -21,9 +26,14 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Read all tasks
+/**
+ * Endpoint for retrieving all tasks for the authenticated user.
+ * GET /
+ * Returns an array of tasks associated with the authenticated user.
+ */
 router.get('/', authMiddleware, async (req, res) => {
   try {
+    // Find all tasks associated with the authenticated user
     const tasks = await Task.findAll({ where: { UserId: req.user.userId } });
 
     res.status(200).json({ tasks });
@@ -33,12 +43,17 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Update a task
+/**
+ * Endpoint for updating a task.
+ * PUT /:id
+ * Updates the task with the provided ID for the authenticated user.
+ */
 router.put('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const { title, completed } = req.body;
 
   try {
+    // Find the task with the provided ID and associated with the authenticated user
     const task = await Task.findOne({
       where: { id, UserId: req.user.userId },
     });
@@ -47,6 +62,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Task not found' });
     }
 
+    // Update the task properties
     task.title = title;
     task.completed = completed;
 
@@ -59,11 +75,16 @@ router.put('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// Delete a task
+/**
+ * Endpoint for deleting a task.
+ * DELETE /:id
+ * Deletes the task with the provided ID for the authenticated user.
+ */
 router.delete('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
 
   try {
+    // Find the task with the provided ID and associated with the authenticated user
     const task = await Task.findOne({
       where: { id, UserId: req.user.userId },
     });
@@ -72,6 +93,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Task not found' });
     }
 
+    // Delete the task
     await task.destroy();
 
     res.status(200).json({ message: 'Task deleted successfully' });

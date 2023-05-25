@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css'
+import './App.css';
 import Register from './components/register';
 import Login from './components/login';
 
 const App = () => {
+  // State variables for tasks, title, and token
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
   const [token, setToken] = useState('');
 
+  // Check if a token is stored in local storage on component mount
   useEffect(() => {
-    // Check if a token is stored in local storage
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
 
+  // Fetch tasks from the server when the token changes
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -34,11 +36,13 @@ const App = () => {
     }
   }, [token]);
 
+  // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
   };
 
+  // Function to create a new task
   const handleCreateTask = async () => {
     try {
       const response = await axios.post(
@@ -53,6 +57,7 @@ const App = () => {
     }
   };
 
+  // Function to delete a task
   const handleDeleteTask = async (taskId) => {
     try {
       await axios.delete(`http://localhost:5000/tasks/${taskId}`, {
@@ -64,6 +69,7 @@ const App = () => {
     }
   };
 
+  // Function to toggle task completion status
   const handleToggleTaskCompletion = async (taskId, completed, title) => {
     try {
       await axios.put(
@@ -90,10 +96,12 @@ const App = () => {
     }
   }, [token]);
 
+  // Render the application
   return (
     <div className='app-main'>
       <h1>To-Do App</h1>
       {token ? (
+        // If a token is present, render the tasks section
         <div className='app-tasks'>
           <div className='new-task'>
             <input
@@ -126,6 +134,7 @@ const App = () => {
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
+        // If no token is present, render the authentication section
         <div className='app-auth'>
           <Login setToken={setToken} />
           <div className='auth-divider'>

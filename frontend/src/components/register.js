@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// This component represents a registration form
 const Register = ({ setToken }) => {
+  // State variables for username and password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function to handle the registration process
   const handleRegister = async () => {
     try {
+      // Send a POST request to the server to register the user
       const response = await axios.post('http://localhost:5000/auth/register', {
         username,
         password,
       });
+
+      // If the registration is successful, set the token received from the server
       setToken(response.data.token);
+
+      // Clear the input fields
       setUsername('');
       setPassword('');
     } catch (error) {
@@ -19,6 +27,7 @@ const Register = ({ setToken }) => {
     }
   };
 
+  // Render the registration form
   return (
     <div className='auth'>
       <h3>Register</h3>
