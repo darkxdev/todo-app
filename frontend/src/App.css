@@ -91,7 +91,24 @@
   box-sizing: border-box;
 }
 
+.task-item input {
+  width: 100%;
+  margin-right: 1rem;
+}
+
+.task-text {
+  width: 100%;
+}
+
+.task-buttons {
+  display: flex;
+}
+
 .button-complete {
   width: 125px;
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
+}
+
+.button-delete {
+  padding: 0 0.5rem;
 }

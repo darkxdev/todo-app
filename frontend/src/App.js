@@ -5,10 +5,11 @@ import Register from './components/register';
 import Login from './components/login';
 
 const App = () => {
-  // State variables for tasks, title, and token
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
   const [token, setToken] = useState('');
+  const [editTaskId, setEditTaskId] = useState(null);
+  const [editedTitle, setEditedTitle] = useState('');
 
   // Check if a token is stored in local storage on component mount
   useEffect(() => {
@@ -55,6 +56,40 @@ const App = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // Function to update a task
+  const handleUpdateTask = async (taskId, newTitle, completed) => {
+    try {
+      await axios.put(
+        `http://localhost:5000/tasks/${taskId}`,
+        { title: newTitle, completed: completed || false },
+        { headers: { Authorization: token } }
+      );
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === taskId ? { ...task, title: newTitle, completed: completed || false } : task
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleStartEditing = (taskId, taskTitle) => {
+    setEditTaskId(taskId);
+    setEditedTitle(taskTitle);
+  };
+
+  const handleCancelEditing = () => {
+    setEditTaskId(null);
+    setEditedTitle('');
+  };
+
+  const handleConfirmEditing = (taskId) => {
+    if (editedTitle.trim() !== '') {
+      handleUpdateTask(taskId, editedTitle, tasks.find((task) => task.id === taskId).completed);
+    }
+    handleCancelEditing();
   };
 
   // Function to delete a task
@@ -116,17 +151,39 @@ const App = () => {
             {tasks.map((task) => (
               <li
                 key={task.id}
-                style={{
-                  textDecoration: task.completed ? 'line-through' : 'none',
-                }}
                 className='task-item'
               >
-                {task.title}
-                <div>
+                {editTaskId === task.id ? (
+                  <input
+                    type="text"
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleConfirmEditing(task.id);
+                      } else if (e.key === 'Escape') {
+                        handleCancelEditing();
+                      }
+                    }}
+                    onBlur={() => handleConfirmEditing(task.id)}
+                    autoFocus
+                  />
+                ) : (
+                  <div
+                    className='task-text'
+                    onClick={() => handleStartEditing(task.id, task.title)}
+                    style={{
+                      textDecoration: task.completed ? 'line-through' : 'none',
+                    }}
+                  >
+                    {task.title}
+                  </div>
+                )}
+                <div className='task-buttons'>
                   <button onClick={() => handleToggleTaskCompletion(task.id, task.completed, task.title)} className='button-complete'>
                     {task.completed ? 'Mark Incomplete' : 'Mark Complete'}
                   </button>
-                  <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
+                  <button onClick={() => handleDeleteTask(task.id)} className='button-delete'>Delete</button>
                 </div>
               </li>
             ))}
@@ -146,7 +203,7 @@ const App = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default App;
