@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${process.env.API_HOST}/tasks`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}/tasks`, {
           headers: { Authorization: token },
         });
         setTasks(response.data.tasks);
@@ -46,7 +46,7 @@ const App = () => {
   const handleCreateTask = async () => {
     try {
       const response = await axios.post(
-        `${process.env.API_HOST}/tasks`,
+        `${process.env.REACT_APP_API_HOST}/tasks`,
         { title },
         { headers: { Authorization: token } }
       );
@@ -60,7 +60,7 @@ const App = () => {
   // Function to delete a task
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`${process.env.API_HOST}/tasks/${taskId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_HOST}/tasks/${taskId}`, {
         headers: { Authorization: token },
       });
       setTasks(tasks.filter((task) => task.id !== taskId));
@@ -73,7 +73,7 @@ const App = () => {
   const handleToggleTaskCompletion = async (taskId, completed, title) => {
     try {
       await axios.put(
-        `${process.env.API_HOST}/tasks/${taskId}`,
+        `${process.env.REACT_APP_API_HOST}/tasks/${taskId}`,
         { completed: !completed, title },
         { headers: { Authorization: token } }
       );

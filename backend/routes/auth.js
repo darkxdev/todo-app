@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Create a JWT token with the user's ID as the payload
-    const token = jwt.sign({ userId: user.id }, 'your-secret-key', {
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY || 'your-secret-key', {
       expiresIn: '1h',
     });
 
