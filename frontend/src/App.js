@@ -47,6 +47,11 @@ const App = () => {
 
   // Function to create a new task
   const handleCreateTask = async () => {
+    if(!title) {
+      setNotice('Task cannnot be empty');
+      return
+    }
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_HOST}/tasks`,
@@ -55,6 +60,7 @@ const App = () => {
       );
       setTasks([...tasks, response.data.task]);
       setTitle('');
+      setNotice('')
     } catch (error) {
       console.error(error);
     }
