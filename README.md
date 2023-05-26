@@ -1,4 +1,4 @@
-## Full Stack Todo App
+## Full Stack To-Do App
 This is a full stack todo app built with Express.js, Sequelize, PostgreSQL, and React.js. The application allows users to create, update, and delete tasks, and manage their todo list.
 
 ### Requirements
