@@ -48,7 +48,7 @@ const App = () => {
   // Function to create a new task
   const handleCreateTask = async () => {
     if(!title) {
-      setNotice('Task cannnot be empty');
+      setNotice('Task cannot be empty');
       return
     }
 
